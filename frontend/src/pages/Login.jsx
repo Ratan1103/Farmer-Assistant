@@ -20,8 +20,10 @@ export default function Login() {
     setLoading(true);
     try {
       const res = await loginFarmer(form);
-      localStorage.setItem("token", res.data.token); // or res.data.access if using JWT
+      localStorage.setItem("access", res.data.access);
+      localStorage.setItem("refresh", res.data.refresh); // or res.data.access if using JWT
       alert("✅ Login successful!");
+
       navigate("/dashboard"); // redirect to dashboard
     } catch (err) {
       console.error("Login error:", err.response?.data || err.message);
