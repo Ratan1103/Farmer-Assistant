@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import ProfilePage from "./pages/ProfilePage";
 import WeatherPage from "./pages/WeatherPage";
 import MarketPrices from "./pages/MarketPrice";
+import AddSchemaPage from "./pages/Scheme";
 
 function App() {
   return (
@@ -56,6 +57,14 @@ function App() {
           element={
             <PrivateRoute>
               <MarketPrices />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/schemes"         
+          element={
+            <PrivateRoute>
+              <AddSchemaPage />
             </PrivateRoute>
           }
         />
