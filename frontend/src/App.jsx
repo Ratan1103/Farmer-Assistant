@@ -5,6 +5,9 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Home from "./pages/Home";
+import ProfilePage from "./pages/ProfilePage";
+import WeatherPage from "./pages/WeatherPage";
+import MarketPrices from "./pages/MarketPrice";
 
 function App() {
   return (
@@ -32,6 +35,31 @@ function App() {
             </PrivateRoute>
           } 
         />
+        <Route
+          path="/dashboard/profile"
+          element={
+            <PrivateRoute>
+              <ProfilePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/weather"
+          element={
+            <PrivateRoute>
+              <WeatherPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/market"         
+          element={
+            <PrivateRoute>
+              <MarketPrices />
+            </PrivateRoute>
+          }
+        />
+
       </Routes>
     </Router>
   );
