@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-export default function DashboardLayout({ children, userName, onLogout }) {
+export default function DashboardLayout({ children, userName }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
     { href: "/dashboard", label: "Dashboard", icon: "📊" },
@@ -14,6 +15,32 @@ export default function DashboardLayout({ children, userName, onLogout }) {
     { href: "/dashboard/disease", label: "Disease Detection", icon: "🔬" },
     { href: "/dashboard/assistant", label: "AI Assistant", icon: "🤖" },
   ];
+
+  // ✅ Logout logic
+  const handleLogout = () => {
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
+  // ✅ Auto-logout if token expired / invalid
+  useEffect(() => {
+    const originalFetch = window.fetch;
+    window.fetch = async (...args) => {
+      const response = await originalFetch(...args);
+
+      if (response.status === 401) {
+        // Token expired or invalid
+        handleLogout();
+      }
+      return response;
+    };
+
+    return () => {
+      window.fetch = originalFetch; // cleanup
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -28,15 +55,16 @@ export default function DashboardLayout({ children, userName, onLogout }) {
             >
               <span className="text-xl">☰</span>
             </button>
-            {/* ✅ Your original branding */}
             <span className="font-bold text-xl sm:inline">🌾 Farmer Assistant</span>
           </div>
 
           {/* Right Section */}
           <div className="flex items-center gap-4">
-            <span className="text-sm hidden sm:inline">Welcome, {userName}</span>
+            <span className="text-sm hidden sm:inline">
+              Welcome, {userName || JSON.parse(localStorage.getItem("user"))?.name || "Farmer"}
+            </span>
             <button
-              onClick={onLogout}
+              onClick={handleLogout}
               className="px-4 py-2 border border-white/50 rounded-lg hover:bg-green-600 transition"
             >
               Logout

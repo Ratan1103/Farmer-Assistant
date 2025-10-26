@@ -9,6 +9,7 @@ import ProfilePage from "./pages/ProfilePage";
 import WeatherPage from "./pages/WeatherPage";
 import MarketPrices from "./pages/MarketPrice";
 import AddSchemaPage from "./pages/Scheme";
+import DiseaseDetection from "./pages/DiseaseDetection";
 
 function App() {
   return (
@@ -65,6 +66,14 @@ function App() {
           element={
             <PrivateRoute>
               <AddSchemaPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/disease"         
+          element={
+            <PrivateRoute>
+              <DiseaseDetection />
             </PrivateRoute>
           }
         />
