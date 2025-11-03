@@ -157,3 +157,6 @@ AUTHENTICATION_BACKENDS = [
     "farmers.backends.PhoneBackend",      # 👈 our custom backend
     "django.contrib.auth.backends.ModelBackend",  # keep default just in case
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

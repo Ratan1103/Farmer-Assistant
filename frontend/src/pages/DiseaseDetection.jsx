@@ -124,7 +124,6 @@ export default function DiseaseDetection() {
           <div className="bg-white rounded-xl shadow p-8">
             <h2 className="text-2xl font-bold mb-6">Upload Crop Image</h2>
             <div className="space-y-6">
-              {/* File Upload */}
               <div className="border-2 border-dashed rounded-lg p-8 text-center">
                 {imagePreview ? (
                   <div className="space-y-4">
@@ -259,6 +258,57 @@ export default function DiseaseDetection() {
                 </p>
               </div>
             </div>
+
+            {/* 🧠 AI Treatment + Prevention + Tips */}
+            {(selectedDiagnosis.treatment?.length > 0 ||
+              selectedDiagnosis.prevention?.length > 0 ||
+              selectedDiagnosis.tips_to_overcome?.length > 0) && (
+              <div className="mt-8 flex justify-center">
+                <div className="w-full md:w-3/4 lg:w-2/3 p-6 bg-white rounded-xl shadow-lg border border-green-200 space-y-8">
+                  {/* Treatment */}
+                  {selectedDiagnosis.treatment?.length > 0 && (
+                    <div>
+                      <h3 className="text-xl font-semibold text-green-700 mb-3 flex items-center gap-2">
+                        🌿 Recommended Treatment
+                      </h3>
+                      <ul className="list-disc list-inside space-y-1 text-gray-700">
+                        {selectedDiagnosis.treatment.map((tip, idx) => (
+                          <li key={idx}>{tip}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Prevention */}
+                  {selectedDiagnosis.prevention?.length > 0 && (
+                    <div>
+                      <h3 className="text-xl font-semibold text-green-700 mb-3 flex items-center gap-2">
+                        🛡️ Prevention Tips
+                      </h3>
+                      <ul className="list-disc list-inside space-y-1 text-gray-700">
+                        {selectedDiagnosis.prevention.map((tip, idx) => (
+                          <li key={idx}>{tip}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Tips to Overcome */}
+                  {selectedDiagnosis.tips_to_overcome?.length > 0 && (
+                    <div>
+                      <h3 className="text-xl font-semibold text-green-700 mb-3 flex items-center gap-2">
+                        💡 Tips to Overcome
+                      </h3>
+                      <ul className="list-disc list-inside space-y-1 text-gray-700">
+                        {selectedDiagnosis.tips_to_overcome.map((tip, idx) => (
+                          <li key={idx}>{tip}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -276,7 +326,6 @@ export default function DiseaseDetection() {
                     onClick={() => setSelectedDiagnosis(d)}
                     className="p-4 border rounded-lg hover:border-green-500 cursor-pointer flex justify-between items-center"
                   >
-                    {/* Left side */}
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <p className="font-semibold">
@@ -299,8 +348,6 @@ export default function DiseaseDetection() {
                         {d.confidence}%
                       </p>
                     </div>
-
-                    {/* Right side: clock + time */}
                     <div className="flex items-center gap-1 text-gray-600 text-sm">
                       <span className="text-lg">⏰</span>
                       {formatDate(d.timestamp, true)}
@@ -308,34 +355,6 @@ export default function DiseaseDetection() {
                   </div>
                 ))
               )}
-            </div>
-          </div>
-        )}
-
-        {/* Common Crop Diseases */}
-        {!uploadMode && (
-          <div className="bg-white rounded-xl shadow p-6">
-            <h2 className="text-2xl font-bold mb-6">Common Crop Diseases</h2>
-            <div className="grid md:grid-cols-2 gap-4">
-              {[
-                { name: "Powdery Mildew", crops: "Wheat, Barley", icon: "🍂" },
-                { name: "Leaf Blast", crops: "Rice, Wheat", icon: "🌾" },
-                { name: "Early Blight", crops: "Potato, Tomato", icon: "🥔" },
-                { name: "Rust", crops: "Wheat, Barley", icon: "🔴" },
-                { name: "Anthracnose", crops: "Cotton, Chili", icon: "🌶️" },
-                { name: "Bacterial Wilt", crops: "Tomato, Pepper", icon: "🍅" },
-              ].map((d, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-3 p-4 border rounded-lg hover:shadow"
-                >
-                  <span className="text-3xl">{d.icon}</span>
-                  <div>
-                    <p className="font-semibold">{d.name}</p>
-                    <p className="text-sm text-gray-500">Affects: {d.crops}</p>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         )}
